@@ -9,17 +9,45 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    @IBOutlet var display : UILabel!
+    
+    var userIsEnteringNumbers = false
+    
+    @IBAction func enterNumber(sender : UIButton) {
+        let digit = sender.currentTitle!
+        
+        if userIsEnteringNumbers {
+            display.text = display.text! + digit
+        } else {
+            display.text = digit
+            
+            userIsEnteringNumbers = true
+        }
+    }
+    
+    var operandStack = Array<Double>()
+    
+    @IBAction func enter() {
+        userIsEnteringNumbers = false
+        operandStack.append(displayValue)
+        
+        println("operandStack = \(operandStack)")
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    var displayValue : Double {
+        get {
+            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+        } set {
+            display.text = "\(newValue)"
+            userIsEnteringNumbers = false
+        }
+        
+        }
+    
+    @IBAction func clear() {
+        displayValue = 0
+        display.text = "\(displayValue)"
     }
-
-
-}
-
+    
+    }
