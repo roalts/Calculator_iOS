@@ -50,4 +50,44 @@ class ViewController: UIViewController {
         display.text = "\(displayValue)"
     }
     
+    @IBAction func operate (sender : UIButton) {
+        let operation = sender.currentTitle!
+        if userIsEnteringNumbers {
+            enter()
+        }
+        
+        switch(operation) {
+        case "+" : performOperation(add)
+        case "-" : performOperation(subtract)
+        case "*" : performOperation(multiply)
+        case "/" : performOperation(divide)
+        default : break
+            
+        }
     }
+    
+    func performOperation (operation : (Double, Double) -> Double) {
+        if operandStack.count >= 2 {
+            displayValue = operation (operandStack.removeLast(), operandStack.removeLast())
+            enter()
+        }
+        
+    }
+    
+    func add(op1 : Double, op2 : Double) -> Double {
+        return op1 + op2
+    }
+    
+    func subtract(op1 : Double, op2 : Double) -> Double {
+        return op1 - op2
+    }
+    
+    func multiply(op1 : Double, op2 : Double) -> Double {
+        return op1 * op2
+    }
+    
+    func divide(op1 : Double, op2 : Double) -> Double {
+        return op1 / op2
+    }
+    
+}
